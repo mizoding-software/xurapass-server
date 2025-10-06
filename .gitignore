@@ -1,0 +1,69 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go build cache & compiled files
+*.a
+*.o
+
+# Test binary, coverage reports
+*.cover
+*.prof
+*.test
+coverage.out
+
+# Output of go build / go install
+/bin/
+/build/
+/dist/
+/cmd/*/main
+*.log
+
+# Dependency directories (managed by Go Modules)
+vendor/
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.tmp
+
+# OS-specific junk
+.DS_Store
+Thumbs.db
+
+# Local environment files
+.env
+
+# Config / credentials (you may add more)
+config/*.local.yaml
+config/*.secrets.yaml
+
+# Temporary or cache files
+tmp/
+cache/
+*.bak
+
+# Docker / CI
+docker-compose.override.yml
+*.pid
+
+# If you use Swaggo for API docs
+/docs/*swagger.json
+/docs/*swagger.yaml
+!docs/          # keep the folder itself
+!docs/readme.md # example to keep doc notes
+
+# If you use GoReleaser or build artifacts
+dist/
+release/
+
+# If you use Air (hot reload tool)
+tmp/
+.air.toml
