@@ -1,0 +1,9 @@
+INSERT INTO security_events (user_id, event_type, ip_address, user_agent, details, severity) VALUES
+('a1b2c3d4-e5f6-7890-abcd-ef1234567890', 'password_changed', '192.168.1.100', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)', '{"method": "user_initiated"}', 'medium'),
+('a1b2c3d4-e5f6-7890-abcd-ef1234567890', 'mfa_enabled', '192.168.1.100', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)', '{"method": "authenticator_app"}', 'medium'),
+('b2c3d4e5-f6g7-8901-bcde-f23456789012', 'email_changed', '192.168.1.102', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', '{"old_email": "jane.old@example.com", "new_email": "jane.smith@example.com"}', 'high'),
+('c3d4e5f6-g7h8-9012-cdef-345678901234', 'failed_login', '192.168.1.200', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', '{"attempts": 2, "lock_duration": "30 minutes"}', 'medium'),
+('g7h8i9j0-k1l2-3456-ghij-789012345678', 'account_locked', '192.168.1.202', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)', '{"reason": "too_many_failed_attempts", "lock_until": "2024-01-20 14:30:00"}', 'high'),
+('h8i9j0k1-l2m3-4567-hijk-890123456789', 'account_locked', '192.168.1.204', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', '{"reason": "too_many_failed_attempts", "lock_until": "2024-01-20 15:00:00"}', 'high'),
+(NULL, 'brute_force_attempt', '192.168.1.205', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', '{"targeted_usernames": ["admin", "hacker_user"], "attempts": 15}', 'critical'),
+(NULL, 'suspicious_activity', '192.168.1.210', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', '{"description": "Multiple failed login attempts from unusual location"}', 'high');
