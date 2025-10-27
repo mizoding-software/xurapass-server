@@ -1,0 +1,77 @@
+name: Database Tests
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  database-test:
+    name: Database Initialization & Tests
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:14.19-alpine3.21
+        env:
+          POSTGRES_DB: xurapass_test
+          POSTGRES_USER: xurapass_user
+          POSTGRES_PASSWORD: xurapass_password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Wait for PostgreSQL
+      run: |
+        until pg_isready -h localhost -p 5432 -U xurapass_user -d xurapass_test; do
+          echo "Waiting for PostgreSQL..."
+          sleep 2
+        done
+
+    - name: Initialize Database Schema
+      run: |
+        for file in src/db/schema/*.sql; do
+          echo "Executing: $file"
+          psql -h localhost -U xurapass_user -d xurapass_test -f $file
+        done
+
+    - name: Seed Test Data
+      run: |
+        for file in src/db/seed/*.sql; do
+          echo "Executing: $file"
+          psql -h localhost -U xurapass_user -d xurapass_test -f $file
+        done
+
+    - name: Run Connection Tests
+      run: node src/db/scripts/test_connection.js
+
+    - name: Run Integrity Tests
+      run: node src/db/scripts/test_integrity.js
+
+    - name: Run Health Check
+      run: node src/db/scripts/health_check.js
+
+    - name: Test Report
+      run: |
+        echo "✅ Database tests completed successfully"
+        echo "📊 All tables created and seeded"
+        echo "🔗 Connection tests passed"
+        echo "✅ Integrity checks verified"
