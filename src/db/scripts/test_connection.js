@@ -10,7 +10,7 @@ async function testConnection() {
         password: process.env.DB_PASSWORD || 'xurapass_password',
     });
 
-    try{
+    try {
         await client.connect();
         console.log('Database connection successful');
 
@@ -21,7 +21,7 @@ async function testConnection() {
             SELECT table_name
             FROM information_schema.tables
             WHERE table_schema = 'public'
-            ORDER BU table_name    
+            ORDER BY table_name    
         `);
 
         console.log('Tables found:', tables.rows.length);
