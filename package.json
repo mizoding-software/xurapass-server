@@ -11,11 +11,11 @@
     "db:up": "docker-compose -f docker-compose.db.yml up -d",
     "db:down": "docker-compose -f docker-compose.db.yml down",
     "db:reset": "docker-compose -f docker-compose.db.yml down -v && docker-compose -f docker-compose.db.yml up -d",
-    "db:logs": "docker-compose -f docker-compose.db.yml logs -f postgres",
+    "db:init": "node src/db/scripts/init_database.js",
     "db:test-connection": "node src/db/scripts/test_connection.js",
     "db:test-integrity": "node src/db/scripts/test_integrity.js",
     "db:health": "node src/db/scripts/health_check.js",
-    "db:ci-test": "npm run db:test-connection && npm run db:test-integrity"
+    "db:ci-test": "npm run db:reset && sleep 10 && npm run db:init && npm run db:test-connection && npm run db:test-integrity && npm run db:health"
   },
   "keywords": [],
   "author": "",
