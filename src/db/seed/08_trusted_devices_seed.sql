@@ -1,6 +1,15 @@
-INSERT INTO trusted_devices (user_id, device_id, device_name, user_agent, browser, os, ip_address, location, is_trusted) VALUES
-('a1b2c3d4-e5f6-7890-abcd-ef1234567890', 'device_macbook_john', 'John''s MacBook Pro', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)', 'Chrome', 'macOS', '192.168.1.100', 'New York, US', true),
-('a1b2c3d4-e5f6-7890-abcd-ef1234567890', 'device_iphone_john', 'John''s iPhone', 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0)', 'Safari', 'iOS', '192.168.1.101', 'New York, US', true),
-('b2c3d4e5-f6g7-8901-bcde-f23456789012', 'device_windows_jane', 'Jane''s Desktop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', 'Firefox', 'Windows', '192.168.1.102', 'Los Angeles, US', true),
-('c3d4e5f6-g7h8-9012-cdef-345678901234', 'device_linux_mike', 'Mike''s Linux PC', 'Mozilla/5.0 (X11; Linux x86_64)', 'Chrome', 'Linux', '192.168.1.103', 'London, UK', false),
-('d4e5f6g7-h8i9-0123-defg-456789012345', 'device_android_sarah', 'Sarah''s Android Phone', 'Mozilla/5.0 (Linux; Android 11)', 'Chrome Mobile', 'Android', '192.168.1.104', 'Chicago, US', true);
+INSERT INTO trusted_devices (user_id, device_id, device_name, user_agent, browser, os, ip_address, location, is_trusted)
+SELECT id, 'device_macbook_john', 'John''s MacBook Pro', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)', 'Chrome', 'macOS', '192.168.1.100'::inet, 'New York, US', true
+FROM users WHERE username = 'john_doe'
+
+UNION ALL SELECT id, 'device_iphone_john', 'John''s iPhone', 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0)', 'Safari', 'iOS', '192.168.1.101'::inet, 'New York, US', true
+FROM users WHERE username = 'john_doe'
+
+UNION ALL SELECT id, 'device_windows_jane', 'Jane''s Desktop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', 'Firefox', 'Windows', '192.168.1.102'::inet, 'Los Angeles, US', true
+FROM users WHERE username = 'jane_smith'
+
+UNION ALL SELECT id, 'device_linux_mike', 'Mike''s Linux PC', 'Mozilla/5.0 (X11; Linux x86_64)', 'Chrome', 'Linux', '192.168.1.103'::inet, 'London, UK', false
+FROM users WHERE username = 'mike_wilson'
+
+UNION ALL SELECT id, 'device_android_sarah', 'Sarah''s Android Phone', 'Mozilla/5.0 (Linux; Android 11)', 'Chrome Mobile', 'Android', '192.168.1.104'::inet, 'Chicago, US', true
+FROM users WHERE username = 'sarah_jones';
