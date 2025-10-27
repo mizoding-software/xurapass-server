@@ -7,7 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .ts",
     "format:check": "prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db:up": "docker-compose -f docker-compose.db.yml up -d",
+    "db:down": "docker-compose -f docker-compose.db.yml down",
+    "db:reset": "docker-compose -f docker-compose.db.yml down -v && docker-compose -f docker-compose.db.yml up -d",
+    "db:logs": "docker-compose -f docker-compose.db.yml logs -f postgres",
+    "db:test-connection": "node src/db/scripts/test_connection.js",
+    "db:test-integrity": "node src/db/scripts/test_integrity.js",
+    "db:health": "node src/db/scripts/health_check.js",
+    "db:ci-test": "npm run db:test-connection && npm run db:test-integrity"
   },
   "keywords": [],
   "author": "",
@@ -33,6 +41,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "mysql2": "^3.15.3"
+    "mysql2": "^3.15.3",
+    "pg": "^8.16.3"
   }
 }
