@@ -1,4 +1,10 @@
-interface UserModelData {
+export interface NewUserModelData {
+	username: string;
+	email: string;
+	password: string;
+}
+
+export interface UserModelData {
 	id: string;
 	username: string;
 	email: string;
@@ -92,7 +98,7 @@ interface SecurityEvent {
 	severitty: "low" | "medium" | "high" | "critical";
 }
 
-interface SecurityQuestion {
+interface SecurityQuestions {
 	question: string;
 	answer_hash: string;
 	created_at: Date;

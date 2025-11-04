@@ -1,4 +1,42 @@
-export const createNewUser = () => {};
+import { pool } from "../db/config/dbConfig";
+import { NewUserModelData, UserModelData } from "../types";
+
+export const createNewUser = async (userData: NewUserModelData): Promise<void> => {
+	const { username, email, password } = userData;
+	let client;
+
+	try {
+		client = await pool.connect();
+
+		// create
+		await client.query("BEGIN");
+
+		const query = "INSERT INTO users(username, email, password_hash) VALUES($1,$2,$3)";
+		const vals = [username, email, password];
+
+		const res = await client.query(query, vals);
+		await client.query("COMMIT");
+
+		console.log(res, "Test");
+	} catch (err: any) {
+		if (client) {
+			await client.query("ROLLBACK");
+		}
+		console.error("Database error", err);
+		throw err;
+	} finally {
+		if (client) client.release();
+	}
+};
+(async () => {
+	try {
+		console.log("Starting user creation");
+		await createNewUser({ username: "angle", email: "test", password: "d" });
+		console.log("User created successfully");
+	} catch (err) {
+		console.error("Failed to create user", err);
+	}
+})();
 
 // Search
 export const searchUser = () => {};
